@@ -1,0 +1,43 @@
+/** Contratos do front-end. Ajuste estes tipos junto com os DTOs da API futura. */
+export type Role = 'admin' | 'tecnico' | 'cliente';
+export type TicketStatus = 'Aberto' | 'Em andamento' | 'Concluído';
+export type TicketType = 'Corretiva' | 'Preventiva' | 'Emergência';
+export type Priority = 'Normal' | 'Alta' | 'Crítica';
+export type ElevatorStatus = 'Operacional' | 'Em manutenção' | 'Fora de serviço';
+export type ChecklistType = 'Mensal' | 'Atendimento';
+export type PageKey = 'dashboard' | 'tickets' | 'clients' | 'assets' | 'team' | 'checklists' | 'reports';
+
+export interface User {
+  id: string; nome: string; email: string; perfil: Role;
+  registro?: string; clienteId?: string | null;
+}
+export interface Client {id:string; nome:string; documento:string; contato:string; email:string; telefone:string}
+export interface Building {id:string; clienteId:string; nome:string; endereco:string}
+export interface Elevator {id:string; predioId:string; identificacao:string; marca:string; modelo:string; status:ElevatorStatus; pendencia:string}
+export interface Ticket {
+  id:string; titulo:string; descricao:string; predioId:string; elevadorId:string;
+  tipo:TicketType; prioridade:Priority; status:TicketStatus; tecnicoId:string|null;
+  criadoPor:string; data:string; concluidoEm:string|null;
+}
+export interface Checklist {
+  id:string; chamadoId:string; tecnicoId:string|null; tipo:ChecklistType;
+  inicio:string; fim:string; lubrificacao:boolean; testeSeguranca:boolean;
+  pecas:string; observacoes:string; responsavel:string; assinatura:string;
+  concluidoEm:string;
+}
+export interface Database {
+  users:User[]; clients:Client[]; buildings:Building[]; elevators:Elevator[];
+  tickets:Ticket[]; checklists:Checklist[];
+}
+export type Collection = keyof Database;
+export type CollectionItem<K extends Collection> = Database[K][number];
+export type NewRecord<K extends Collection> = Omit<CollectionItem<K>, 'id'>;
+export type NewTicket = Omit<Ticket, 'id'|'status'|'criadoPor'|'data'|'concluidoEm'>;
+export type NewChecklist = Omit<Checklist,'id'|'concluidoEm'>;
+export interface AccessScope {
+  tickets: Ticket[]; buildings: Building[]; elevators: Elevator[]; history: Checklist[];
+  myBuildingIds: string[]; visitedBuildingIds: string[];
+}
+export interface Credentials { email:string; password:string }
+export interface PageProps {navigate: (page:PageKey)=>void}
+export type BadgeTone = 'blue'|'green'|'amber'|'red'|'neutral';
