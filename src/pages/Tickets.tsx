@@ -27,7 +27,10 @@ export default function Tickets({ navigate }:PageProps) {
   const building = current && db.buildings.find(b=>b.id===current.predioId);
   const elevator = current && db.elevators.find(e=>e.id===current.elevadorId);
   const technician = current && db.users.find(u=>u.id===current.tecnicoId);
-  const checklist = current && db.checklists.find(c=>c.chamadoId===current.id);
+  const attendances = current ? db.checklists
+    .filter(c=>c.chamadoId===current.id)
+    .sort((a,b)=>new Date(b.concluidoEm).getTime()-new Date(a.concluidoEm).getTime()) : [];
+  const lastAttendance=attendances[0];
   const availableElevators = db.elevators.filter(e=>e.predioId===form.predioId);
   const createTicket = (event:FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -63,8 +66,8 @@ export default function Tickets({ navigate }:PageProps) {
       <div className="detail-grid"><div><span className="detail-label">PRÉDIO</span><strong>{building?.nome}</strong><small>{building?.endereco}</small></div><div><span className="detail-label">ELEVADOR</span><strong>{elevator?.identificacao}</strong><small>{elevator?.marca} · {elevator?.modelo}</small></div><div><span className="detail-label">ATENDIMENTO</span><strong>{current.tipo}</strong><small>Prioridade: {current.prioridade}</small></div><div><span className="detail-label">ABERTURA</span><strong>{dateTimeBr(current.data)}</strong><small>{current.status==='Concluído'?'Finalizado em '+dateTimeBr(current.concluidoEm):'Aguardando conclusão'}</small></div></div>
       {user.perfil==='admin'&&current.status!=='Concluído'&&<Field label="Técnico responsável"><select value={current.tecnicoId||''} onChange={e=>{update('tickets',current.id,{tecnicoId:e.target.value||null});notify('Responsável atualizado.')}}><option value="">Ainda não atribuído</option>{technicians.map(t=><option key={t.id} value={t.id}>{t.nome} · {t.registro}</option>)}</select></Field>}
       {user.perfil!=='admin'&&<div className="detail-assignment"><UserRound size={16}/> Técnico: <strong>{technician?.nome||'Ainda não atribuído'}</strong></div>}
-      {checklist&&<div className="detail-completed"><CheckCircle2 size={18}/> Checklist registrado · {dateTimeBr(checklist.concluidoEm)} · {checklist.tipo}</div>}
-      {canHandle&&current.status!=='Concluído'&&<div className="form-actions detail-actions">{current.status==='Aberto'&&<Button variant="secondary" icon={Clock3} onClick={start}>Iniciar atendimento</Button>}{current.tecnicoId&&<Button icon={ClipboardCheck} onClick={()=>{setSelected(null);navigate('checklists')}}>Preencher checklist</Button>}{!current.tecnicoId&&<span className="detail-hint">Atribua um técnico para liberar o checklist.</span>}</div>}
+      {lastAttendance&&<div className="detail-completed"><CheckCircle2 size={18}/> {attendances.length} visita(s) registrada(s) · Última: {dateTimeBr(lastAttendance.concluidoEm)} · {lastAttendance.registroAtendimento?.numeroRegistro||lastAttendance.id}</div>}
+      {canHandle&&current.status!=='Concluído'&&<div className="form-actions detail-actions">{current.status==='Aberto'&&<Button variant="secondary" icon={Clock3} onClick={start}>Iniciar atendimento</Button>}{current.tecnicoId&&<Button icon={ClipboardCheck} onClick={()=>{setSelected(null);navigate('checklists')}}>Registrar visita técnica</Button>}{!current.tecnicoId&&<span className="detail-hint">Atribua um técnico para liberar o checklist.</span>}</div>}
     </Modal>}
   </>;
 }

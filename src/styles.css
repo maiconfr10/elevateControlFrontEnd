@@ -52,3 +52,61 @@
 @media(max-width:800px){.login-shell{grid-template-columns:1fr}.login-aside{display:none}.login-main{padding:24px 25px;min-height:100vh}.login-content{padding:50px 0;width:min(100%,440px)}.login-mobile-brand{display:flex;align-items:center;gap:10px;margin:0 0 45px}.login-mobile-brand strong{font-size:21px;color:#1a3c5c;letter-spacing:-1px}.login-mobile-brand strong span{color:#598bb4;font-weight:500}.login-mobile-brand .login-brand-icon{background:#eaf3fb;width:36px;height:36px;border-radius:10px}.login-main-top{justify-content:flex-end}.login-edition{display:none}}
 @media(max-width:450px){.login-main{padding:18px 17px}.login-content{padding:40px 0}.login-form-heading h2{font-size:31px}.login-form-heading p{margin-bottom:23px}.login-demo{padding:12px}.login-demo-grid{gap:5px}.login-demo-account{padding:11px 2px}.login-demo-account small{font-size:8px}.login-main-footer{font-size:9px}.top-user-label{display:none}}
 @media(prefers-reduced-motion:reduce){.login-submit,.login-input-wrap,.login-demo-account{transition:none}}
+
+/* ElevateControl 0.4 — registro de atendimento digitalizado.
+   Estilo corporativo herdado do projeto, sem duplicar a página de checklist. */
+.registro-section{display:flex;gap:12px;align-items:center;border-bottom:1px solid #e5edf4;padding:18px 0 12px;margin-top:4px}
+.registro-section h3{margin:0;color:#26435d;font-size:14px;font-weight:800;letter-spacing:-.15px}
+.registro-section p{color:#889bad;font-size:11px;line-height:1.6;margin:4px 0 0}
+.registro-step{background:#eaf3fc;color:#2d70ae;border-radius:9px;width:35px;height:35px;display:grid;place-items:center;font-size:12px;font-weight:850;flex:none}
+.registro-equipment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.registro-equipment-card{padding:17px;border:1px solid #dfe8f2;border-radius:11px;background:#f8fbfe;display:flex;flex-direction:column;gap:12px;min-width:0}
+.registro-equipment-head{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#2a4864;font-size:12px;font-weight:800}
+.registro-equipment-card .field select{background:white}
+.registro-hint{font-size:10px;color:#8195aa;line-height:1.5}
+.registro-label{color:#3e5a72;font-weight:800;font-size:11px;margin-top:4px}
+.registro-option-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 7px}
+.registro-check{display:flex;align-items:flex-start;gap:7px;color:#546c83;cursor:pointer;font-size:10px;line-height:1.45}
+.registro-check input,.registro-authorization>input{accent-color:#256fa9;width:15px;height:15px;flex:none;margin-top:0}
+.registro-authorization{border:1px solid #dce8f4;background:#f3f8fd;border-radius:10px;display:flex;gap:11px;align-items:flex-start;padding:15px;color:#385873;cursor:pointer}
+.registro-authorization strong{font-size:12px;display:block}.registro-authorization small{font-size:10px;color:#879db0;line-height:1.55;display:block;margin-top:5px}
+.note-warning{background:#fff8eb;border-color:#f4e6c7;color:#9b723b}
+.registro-equipment-card .text-link{font-size:10px}
+.field input[readonly]{background:#f3f6f9;color:#607991;cursor:default}
+@media(max-width:750px){.registro-equipment-grid{grid-template-columns:1fr}}
+@media(max-width:460px){.registro-option-list{grid-template-columns:1fr}.registro-section h3{font-size:12px}.registro-equipment-card{padding:13px}}
+
+/* ElevateControl v0.5 — check-list mensal 2026: somente o módulo preventivo,
+   aproveitando observações gerais, materiais, datas, cadastro e assinatura do condomínio. */
+.monthly-wrapper{border:1px solid #dce7f1;background:#fff;border-radius:12px;padding:19px;min-width:0}
+.monthly-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.monthly-icon{height:38px;width:38px;border-radius:10px;background:#ecf4fc;color:#3575ac;display:grid;place-items:center;flex:none}
+.monthly-header h4{margin:0;font-size:13px;color:#26425d;font-weight:800}
+.monthly-header p{color:#8498ac;font-size:11px;margin:5px 0 0}
+.monthly-progress-label{margin-left:auto;color:#477eab;font-weight:800;font-size:13px}
+.monthly-progress-track{width:100%;height:6px;border-radius:8px;background:#ebf2f8;margin:0 0 16px;overflow:hidden}
+.monthly-progress-track span{display:block;height:100%;border-radius:8px;background:#387caf;transition:width .15s}
+.monthly-intro-field{margin-top:17px;max-width:365px}
+.monthly-section{margin-top:21px;min-width:0}
+.monthly-section-title{display:flex;align-items:center;gap:9px;margin:0 0 11px}
+.monthly-section-title span{height:25px;min-width:25px;border-radius:6px;display:grid;place-items:center;background:#edf5fc;color:#3771a4;font-size:10px;font-weight:850}
+.monthly-section-title h5{font-size:12px;color:#34536e;margin:0;font-weight:800}
+.monthly-section-title small{margin-left:auto;font-size:10px;color:#91a3b6}
+.monthly-table-scroller{overflow-x:auto;border:1px solid #e0e9f1;border-radius:9px;background:#fff}
+.monthly-table{border-collapse:collapse;width:100%;min-width:520px;table-layout:auto}
+.monthly-table th{background:#f1f6fb;color:#57748e;font-size:10px;letter-spacing:.35px;padding:11px 9px;text-align:left;border-bottom:1px solid #dce6f1}
+.monthly-table th:nth-last-child(-n+3){text-align:center;width:43px}
+.monthly-table td{border-bottom:1px solid #edf1f5;color:#3d5269;font-size:11px;line-height:1.55;padding:9px;vertical-align:middle}
+.monthly-table tr:last-child td{border-bottom:0}
+.monthly-table tr:nth-child(even) td{background:#fbfcfe}
+.monthly-number{text-align:center;width:45px;font-weight:750;color:#607a93!important}
+.monthly-description small{font-size:9px;color:#90a1b1;display:block;margin-top:3px}
+.monthly-answer{text-align:center;padding:3px!important}
+.monthly-answer label{display:grid;place-items:center;min-height:34px;cursor:pointer}
+.monthly-answer input{height:16px;width:16px;accent-color:#2d76b5;cursor:pointer}
+.monthly-measures{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.monthly-signatures{background:#f7fafe;border:1px solid #dce8f4;padding:17px;border-radius:10px;display:grid;gap:13px}
+.monthly-signature-title h4{font-size:13px;margin:0 0 6px;color:#2b4f6a}
+.monthly-signature-title p{font-size:11px;color:#8195a8;line-height:1.6;margin:0}
+@media(max-width:740px){.monthly-measures{grid-template-columns:1fr 1fr}.monthly-wrapper{padding:13px}}
+@media(max-width:470px){.monthly-measures{grid-template-columns:1fr}.monthly-section-title h5{font-size:11px}.monthly-header h4{font-size:12px}}

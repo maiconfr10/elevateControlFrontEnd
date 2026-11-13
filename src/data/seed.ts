@@ -35,6 +35,15 @@ export const seed:Database = {
   ],
   checklists: [
     { id: 'CHK-001', chamadoId: 'CH-1004', tecnicoId: 'USR-02', tipo: 'Mensal', inicio: '2026-11-04T10:00', fim: '2026-11-04T12:30', lubrificacao: true, testeSeguranca: true, pecas: 'Nenhuma troca necessária', observacoes: 'Equipamento liberado para uso.', responsavel: 'Responsável do condomínio', assinatura: '', concluidoEm: '2026-11-04T12:30:00' },
-    { id: 'CHK-002', chamadoId: 'CH-1005', tecnicoId: 'USR-03', tipo: 'Atendimento', inicio: '2026-11-01T13:00', fim: '2026-11-01T14:15', lubrificacao: false, testeSeguranca: true, pecas: 'Substituição de sensor de porta', observacoes: 'Ajuste concluído. Funcionamento normal.', responsavel: 'Portaria do edifício', assinatura: '', concluidoEm: '2026-11-01T14:15:00' },
+    { id: 'CHK-002', chamadoId: 'CH-1005', tecnicoId: 'USR-03', tipo: 'Atendimento', inicio: '2026-11-01T13:00', fim: '2026-11-01T14:15', lubrificacao: false, testeSeguranca: true, pecas: 'Substituição de sensor de porta', observacoes: 'Ajuste concluído. Funcionamento normal.', responsavel: 'Portaria do edifício', assinatura: '', concluidoEm: '2026-11-01T14:15:00',
+      registroAtendimento: {
+        numeroRegistro:'RA-DEMO-0002',
+        equipamentos:[{elevadorId:'ELV-05',tiposVisita:['Corretiva'],situacoes:['Atendimento regularizado'],outros:''}],
+        observacoesEmpresa:'Verificação funcional após o ajuste.',
+        ocorrencia:'Sensor de porta apresentava funcionamento intermitente.',
+        materialNecessario:'', autorizacaoMaterial:null,
+        servicoExecutado:{data:'2026-11-01',nomeCliente:'Portaria do edifício',tecnico:'Bruno Mendes',assinaturaCliente:''},
+      },
+    },
   ],
 };

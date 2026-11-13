@@ -28,7 +28,9 @@ export const ticketsApi={
 };
 export const checklistsApi={
   list:()=>apiRequest<Checklist[]>('/checklists'),
+  /** Envia checklist + registro de atendimento + autorizações/assinaturas ao backend. */
   conclude:(checklist:NewChecklist)=>apiRequest<Checklist>('/checklists',{method:'POST',body:checklist}),
+  detail:(id:string)=>apiRequest<Checklist>(url('/checklists',id)),
 };
 export const usersApi={
   list:()=>apiRequest<User[]>('/usuarios'),

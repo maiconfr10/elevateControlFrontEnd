@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState,type PointerEvent} from 'react';
 import {RotateCcw} from 'lucide-react';
-export default function SignaturePad({onChange}:{onChange:(dataUrl:string)=>void}){
+export default function SignaturePad({onChange,label='Assinatura do responsável *'}:{onChange:(dataUrl:string)=>void;label?:string}){
   const canvasRef=useRef<HTMLCanvasElement|null>(null);
   const drawing=useRef(false);const hasStroke=useRef(false);
   const [count,setCount]=useState(0);
@@ -31,5 +31,5 @@ export default function SignaturePad({onChange}:{onChange:(dataUrl:string)=>void
     canvas.getContext('2d')?.clearRect(0,0,canvas.width,canvas.height);
     drawing.current=false;hasStroke.current=false;onChange('');setCount(0);
   };
-  return <div className="signature-wrap"><div className="signature-head"><span>Assinatura do responsável *</span><button type="button" onClick={clear}><RotateCcw size={14}/> Limpar</button></div><canvas ref={canvasRef} className="signature-canvas" onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} aria-label="Área para assinatura digital"/><p>Assine com o mouse ou com o dedo. {count>0?'Assinatura capturada.':'A assinatura é obrigatória para encerrar o atendimento.'}</p></div>;
+  return <div className="signature-wrap"><div className="signature-head"><span>{label}</span><button type="button" onClick={clear}><RotateCcw size={14}/> Limpar</button></div><canvas ref={canvasRef} className="signature-canvas" onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} aria-label="Área para assinatura digital"/><p>Assine com o mouse ou com o dedo. {count>0?'Assinatura capturada.':'A assinatura é obrigatória para encerrar o atendimento.'}</p></div>;
 }

@@ -12,13 +12,13 @@ const navigation: Record<Role, Array<{key:PageKey;label:string;icon:typeof Layou
     { key:'clients',label:'Clientes',icon:Users },
     { key:'assets',label:'Prédios e elevadores',icon:Building2 },
     { key:'team',label:'Equipe e acessos',icon:ShieldCheck },
-    { key:'checklists',label:'Checklists',icon:ClipboardCheck },
+    { key:'checklists',label:'Atendimentos e checklists',icon:ClipboardCheck },
     { key:'reports',label:'Relatórios e histórico',icon:FileText },
   ],
   tecnico: [
     { key:'dashboard',label:'Meu painel',icon:LayoutGrid },
     { key:'tickets',label:'Meus chamados',icon:Ticket },
-    { key:'checklists',label:'Checklists',icon:ClipboardCheck },
+    { key:'checklists',label:'Atendimentos e checklists',icon:ClipboardCheck },
     { key:'reports',label:'Histórico atendido',icon:FileText },
   ],
   cliente: [
@@ -62,7 +62,7 @@ export default function Layout({ page, navigate, children }: {page:PageKey;navig
         <div className="top-right"><span className="top-user-label"><strong>{user.nome}</strong><small>{labelRole[user.perfil]}</small></span><button className="icon-button notification" aria-label="Notificações demonstrativas" onClick={()=>notify('O painel utiliza dados de demonstração.')}><Bell size={20}/><span/></button><div className="avatar avatar-top" title={`${user.nome} · ${labelRole[user.perfil]}`}>{initials(user.nome)}</div><button className="icon-button top-logout" title="Sair da conta" aria-label="Sair da conta" onClick={handleLogout} disabled={loggingOut}><LogOut size={18}/></button></div>
       </header>
       <main className="content">{children}</main>
-      <footer className="page-footer"><span>© 2026 ElevateControl · Protótipo acadêmico</span><span>{isDemo?'Versão 0.3 · Login demonstrativo':'Versão 0.3 · Autenticação via API'}</span></footer>
+      <footer className="page-footer"><span>© 2026 ElevateControl · Protótipo acadêmico</span><span>{isDemo?'Versão 0.4 · Login demonstrativo':'Versão 0.4 · Autenticação via API'}</span></footer>
     </div>
   </div>;
 }

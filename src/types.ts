@@ -19,11 +19,77 @@ export interface Ticket {
   tipo:TicketType; prioridade:Priority; status:TicketStatus; tecnicoId:string|null;
   criadoPor:string; data:string; concluidoEm:string|null;
 }
+/** Campos digitalizados do Registro de Atendimento (formulário de referência recebido). */
+export const tiposVisita = ['Mensal', 'Auditoria', 'Corretiva', 'Vistoria'] as const;
+export type TipoVisita = typeof tiposVisita[number];
+export const situacoesAtendimento = [
+  'Atendimento regularizado',
+  'Pendência de Material',
+  'Solicitação de Apoio Técnico',
+  'Orçamento pendente de aprovação',
+  'Parado',
+  'Outros',
+] as const;
+export type SituacaoAtendimento = typeof situacoesAtendimento[number];
+/** Rotinas do checklist mensal padrão 2026 (S = Sim, N = Não, NA = Não se aplica). */
+export type RespostaRotina = 'S' | 'N' | 'NA';
+export interface MarcacaoRotina {
+  codigo:string;
+  resposta:RespostaRotina;
+}
+export interface ChecklistMensalDetalhado {
+  versao:'2026';
+  ll:string; // Sigla preservada do formulário: significado ainda não informado pelo grupo.
+  respostas:MarcacaoRotina[];
+  folgaRedutorMm:string;
+  medidasAcrilicos:string;
+  distanciaContrapesoParachoqueMm:string;
+}
+export interface AssinaturasMensais {
+  assinaturaTecnico:string;
+  nomeLiderServicos:string;
+  assinaturaLiderServicos:string;
+  // A assinatura do responsável do condomínio já existe em servicoExecutado.
+}
+export interface RegistroElevador {
+  elevadorId:string;
+  tiposVisita:TipoVisita[];
+  situacoes:SituacaoAtendimento[];
+  outros:string;
+  /** Um checklist mensal por elevador da visita. Opcional para históricos legados. */
+  checklistMensal?:ChecklistMensalDetalhado;
+}
+export interface AutorizacaoMaterial {
+  data:string;
+  nomeCliente:string;
+  tecnico:string;
+  assinaturaCliente:string;
+}
+export interface ServicoExecutado {
+  data:string;
+  nomeCliente:string;
+  tecnico:string;
+  assinaturaCliente:string;
+}
+export interface RegistroAtendimento {
+  /** Identificação gerada pelo sistema; não é a numeração de formulários de terceiros. */
+  numeroRegistro:string;
+  equipamentos:RegistroElevador[]; // 1 ou 2 elevadores do mesmo prédio
+  observacoesEmpresa:string;
+  ocorrencia:string;
+  materialNecessario:string;
+  autorizacaoMaterial:AutorizacaoMaterial|null;
+  servicoExecutado:ServicoExecutado;
+  /** Uma coleta para a visita; assinatura do condomínio é reutilizada de servicoExecutado. */
+  assinaturasMensais?:AssinaturasMensais;
+}
 export interface Checklist {
   id:string; chamadoId:string; tecnicoId:string|null; tipo:ChecklistType;
   inicio:string; fim:string; lubrificacao:boolean; testeSeguranca:boolean;
   pecas:string; observacoes:string; responsavel:string; assinatura:string;
   concluidoEm:string;
+  /** Ausente nos registros legados da versão 0.3; não exige migração destrutiva. */
+  registroAtendimento?:RegistroAtendimento;
 }
 export interface Database {
   users:User[]; clients:Client[]; buildings:Building[]; elevators:Elevator[];

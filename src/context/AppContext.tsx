@@ -41,9 +41,28 @@ export function AppProvider({ children }:{children:ReactNode}) {
     ...payload, status:'Aberto', criadoPor:user.id, data:new Date().toISOString(), concluidoEm:null,
   });
   const saveChecklist = (payload:NewChecklist):Checklist => {
-    const chk = add('checklists','CHK',{...payload,concluidoEm:new Date().toISOString()});
-    update('tickets',payload.chamadoId,{status:'Concluído',concluidoEm:new Date().toISOString()});
-    notify('Checklist finalizado e chamado concluído.');
+    const now = new Date().toISOString();
+    const chk = add('checklists','CHK',{...payload,concluidoEm:now});
+    const registro = payload.registroAtendimento;
+    // Um atendimento pode terminar com pendências: registrar a visita não significa
+    // automaticamente que o chamado ou o elevador estão liberados para uso.
+    const regularizado = !registro || registro.equipamentos.every(item =>
+      item.situacoes.length===1 && item.situacoes[0]==='Atendimento regularizado');
+    update('tickets',payload.chamadoId,regularizado
+      ?{status:'Concluído',concluidoEm:now}
+      :{status:'Em andamento',concluidoEm:null});
+    if(registro){
+      for(const item of registro.equipamentos){
+        const parado=item.situacoes.includes('Parado');
+        const pendencias=item.situacoes.filter(s=>s!=='Atendimento regularizado');
+        const texto=pendencias.map(s=>s==='Outros'?(item.outros||'Outros'):s).join('; ');
+        update('elevators',item.elevadorId,{
+          status:parado?'Fora de serviço':pendencias.length?'Em manutenção':'Operacional',
+          pendencia:texto,
+        });
+      }
+    }
+    notify(regularizado?'Registro salvo e chamado concluído.':'Visita registrada com pendências. O chamado permanece em andamento.');
     return chk;
   };
   const resetDemo=()=>{resetData();setDb(getInitialData());notify('Dados demonstrativos restaurados.');};
